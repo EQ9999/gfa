@@ -6,6 +6,7 @@
   <name>gfa</name>
   <description>网关、熔断、认证</description>
   
+  
   <profiles>
 		<profile>
 			<id>jdk-1.8</id>
@@ -21,6 +22,16 @@
 			</properties>
 		</profile>
 	</profiles>
+	
+	<repositories>
+
+		<repository>
+			<id>jeesite-repos</id>
+			<name>Jeesite Repository</name>
+			<url>https://maven.aliyun.com/nexus/content/groups/public</url>
+		</repository>
+
+	</repositories>
 
 	<dependencies>
 		<dependency>
