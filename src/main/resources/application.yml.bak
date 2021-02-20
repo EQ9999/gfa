@@ -1,9 +1,10 @@
-#不使用配置中心时配置内容
 server:
   port: 8881
-thello: "hello xxxx!"
+testbean: 
+  msg: "hello qqee!"
+  msg2: "888"
+thello: "sb!"
 spring:
-  profiles: dev
   cloud:
     consul:
       host: 159.75.38.24
@@ -15,19 +16,23 @@ spring:
         prefer-ip-address: true
         health-check-interval: 10s
         health-check-critical-timeout: 30s
-        health-check-path: /health
+        health-check-path: /hello
         instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} # 应用名称+服务器IP+端口
     gateway:
       routes:
         - id: bd
           uri: https://www.baidu.com
           predicates:
-            - Path=/*
+            - Path=/s
+          filters:
+            - name: My
+              args:
+                tData: "100"
+            #- PrefixPath=/s
   security:
     user:
       name: hdy
       password: 1995415
-  
 #启用监控
 management:
   endpoints:
