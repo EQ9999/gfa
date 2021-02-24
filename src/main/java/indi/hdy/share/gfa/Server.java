@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RestController
-public class Test {
+public class Server {
 
 	@Autowired
 	private TestBean testBean;
@@ -41,7 +41,7 @@ public class Test {
 //	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Test.class);
+		SpringApplication.run(Server.class);
 
 	}
 }
