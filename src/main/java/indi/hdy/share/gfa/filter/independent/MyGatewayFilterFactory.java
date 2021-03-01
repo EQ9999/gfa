@@ -4,14 +4,9 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.GatewayFilterFactory;
 import org.springframework.core.Ordered;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
-import io.netty.handler.codec.http.HttpHeaderValues;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -47,7 +42,7 @@ class MyGateWay implements GatewayFilter, Ordered {
 
 	@Override
 	public int getOrder() {
-		return -1;
+		return -3;
 	}
 
 	@Override
@@ -63,10 +58,6 @@ class MyGateWay implements GatewayFilter, Ordered {
 //			return Mono.empty();
 //		}));
 
-		ServerHttpResponse response = a.getResponse();
-//		response.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-		response.setStatusCode(HttpStatus.OK);
-
 //		response.writeAndFlushWith((x) -> {
 //			x.onNext((Publisher<DataBuffer>) (s) -> {
 //				DataBufferFactory bufferFactory = response.bufferFactory();
@@ -78,9 +69,13 @@ class MyGateWay implements GatewayFilter, Ordered {
 //			});
 //		});
 
-		response.getHeaders().add("content-type", HttpHeaderValues.TEXT_PLAIN + "; charset=UTF-8");
-		response.getHeaders().set("content-length", String.valueOf("sb".getBytes().length));
-		response.getHeaders().add("connection", HttpHeaderValues.KEEP_ALIVE.toString());
+//		ServerHttpResponse response = a.getResponse();
+////		response.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+//		response.setStatusCode(HttpStatus.OK);
+////		response.getHeaders().add("content-type", HttpHeaderValues.TEXT_PLAIN + "; charset=UTF-8");
+//		response.getHeaders().add("content-type", "text/html; charset=UTF-8");
+//		response.getHeaders().set("content-length", String.valueOf("<h1>sb</h1>".getBytes().length));
+//		response.getHeaders().add("connection", HttpHeaderValues.KEEP_ALIVE.toString());
 
 //		ServerWebExchange build = a.mutate().request((s) -> {
 //			try {
@@ -97,14 +92,7 @@ class MyGateWay implements GatewayFilter, Ordered {
 //			e.printStackTrace();
 //		}
 
-		DataBufferFactory bufferFactory2 = response.bufferFactory();
-		byte[] bytes = "1001".getBytes();
-		DataBuffer allocateBuffer2 = bufferFactory2.allocateBuffer(bytes.length);
-		allocateBuffer2.write(bytes);
-		System.out.println(allocateBuffer2.readPosition());
-		System.out.println(allocateBuffer2.capacity());
-
-		DataBuffer wrap = bufferFactory2.wrap("sb".getBytes());
+//		DataBuffer wrap = bufferFactory2.wrap("sb".getBytes());
 
 //		return a.getResponse().setComplete();
 
@@ -133,21 +121,38 @@ class MyGateWay implements GatewayFilter, Ordered {
 //				}
 //			});
 //		});
-		ChannelSendOperator
-		return response.writeWith((s) -> {
-			System.out.println(s.getClass());
+		String scheme = a.getRequest().getURI().getScheme();
+		System.out.println("---" + scheme);
+//		ServerHttpRequest build = a.getRequest().mutate().path("http://idanmu.im").build();
+
+		System.out.println(a.getResponse().getClass());
+
+//		ServerWebExchange build = a.mutate().response(new MyResponse2((AbstractServerHttpResponse) a.getResponse())).build();
+
+		System.out.println("---分割线-----");
+		return b.filter(a.mutate().response(new MyResponse(a.getResponse())).build());
+
+//		MyResponse myResponse = new MyResponse(a.getResponse());
+
+//		return myResponse.writeWith((s) -> {
+//			System.out.println(s.getClass());
 //			s.onSubscribe(new Subscription() {
 //				boolean send = false;
 //
 //				@Override
 //				public void request(long n) {
-////					if (send) {
-////						return;
-////					}
-////					send = true;
+//					if (n != 1) {
+//						return;
+//					}
 //					System.out.println("-----" + n);
-////					s.onNext(allocateBuffer2);
-////					s.onComplete();
+//					DataBufferFactory bufferFactory2 = response.bufferFactory();
+//					byte[] bytes = "<h1>sb</h1>".getBytes();
+//					DataBuffer allocateBuffer2 = bufferFactory2.allocateBuffer(bytes.length);
+//					allocateBuffer2.write(bytes);
+//					System.out.println(allocateBuffer2.readPosition());
+//					System.out.println(allocateBuffer2.capacity());
+//					s.onNext(allocateBuffer2);
+//					s.onComplete();
 //				}
 //
 //				@Override
@@ -155,9 +160,9 @@ class MyGateWay implements GatewayFilter, Ordered {
 //
 //				}
 //			});
-			s.onNext(allocateBuffer2);
-			s.onComplete();
-		});
+////			s.onNext(allocateBuffer2);
+////			s.onComplete();
+//		});
 
 //		return response.writeWith(Flux.just(allocateBuffer2)).then(Mono.fromRunnable(() -> {
 //			System.out.println(this.hashCode() + " my gateway post-- request=" + a.getRequest() + ",response="

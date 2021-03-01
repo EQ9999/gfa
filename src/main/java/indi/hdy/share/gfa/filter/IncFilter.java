@@ -26,7 +26,8 @@ public class IncFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		System.out.println("global filter--" + exchange.getRequest().getURI() + "---" + inc.incrementAndGet());
+		System.out.println("global filter--" + exchange.getRequest().getURI() + "--" + exchange.getResponse().getClass()
+				+ "---" + inc.incrementAndGet());
 		return chain.filter(exchange);
 	}
 
