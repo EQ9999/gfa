@@ -1,0 +1,37 @@
+server:
+  port: 8882
+spring:
+  application:
+    name: oauth
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery: # 服务发现配置
+        enabled: true
+        register: true
+        deregister: true
+        prefer-ip-address: true
+        health-check-interval: 10s
+        health-check-critical-timeout: 30s
+        health-check-path: /login
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} # 应用名称+服务器IP+端口
+  security:
+    user:
+      name: hdy
+      password: 111
+  redis:
+    database: 2
+    host: 159.75.38.24
+    port: 6379
+    password: Zxc1995415
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+    timeout: 100ms
+management:
+  endpoint:
+    health:
+      enabled: true

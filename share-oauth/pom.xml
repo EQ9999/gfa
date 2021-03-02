@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>indi.hdy.share</groupId>
+		<artifactId>gfa</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>share-oauth</artifactId>
+	<name>oauth</name>
+	<description>权限认证</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>indi.hdy.share</groupId>
+			<artifactId>share-base</artifactId>
+			<version>${share.base.version}</version>
+		</dependency>
+		<!-- oauth2认证，除外web依赖，不然和gateway冲突 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
+	</dependencies>
+</project>
