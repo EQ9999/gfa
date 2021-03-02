@@ -11,6 +11,8 @@
 # hlsearch on (H) or off (h):
 ~h
 # Command Line History (newest to oldest):
+:wq
+|2,0,1614687081,,"wq"
 :q
 |2,0,1613695322,,"q"
 
@@ -25,20 +27,39 @@
 # Registers:
 
 # File marks:
-'0  1  0  ~/.git/COMMIT_EDITMSG
-|4,48,1,0,1613695322,"~/.git/COMMIT_EDITMSG"
-'1  1  0  ~/.gitconfig
-|4,49,1,0,1613695302,"~/.gitconfig"
+'0  2  10  ~/share-base/.gitignore
+|4,48,2,10,1614687081,"~/share-base/.gitignore"
+'1  1  0  ~/.git/COMMIT_EDITMSG
+|4,49,1,0,1613695322,"~/.git/COMMIT_EDITMSG"
+'2  1  0  ~/.gitconfig
+|4,50,1,0,1613695302,"~/.gitconfig"
 
 # Jumplist (newest first):
+-'  2  10  ~/share-base/.gitignore
+|4,39,2,10,1614687081,"~/share-base/.gitignore"
+-'  1  0  ~/share-base/.gitignore
+|4,39,1,0,1614687067,"~/share-base/.gitignore"
+-'  1  0  ~/.git/COMMIT_EDITMSG
+|4,39,1,0,1613695322,"~/.git/COMMIT_EDITMSG"
 -'  1  0  ~/.git/COMMIT_EDITMSG
 |4,39,1,0,1613695322,"~/.git/COMMIT_EDITMSG"
 -'  1  0  ~/.gitconfig
 |4,39,1,0,1613695302,"~/.gitconfig"
 -'  1  0  ~/.gitconfig
 |4,39,1,0,1613695302,"~/.gitconfig"
+-'  1  0  ~/.gitconfig
+|4,39,1,0,1613695302,"~/.gitconfig"
+-'  1  0  ~/.gitconfig
+|4,39,1,0,1613695302,"~/.gitconfig"
 
 # History of marks within files (newest to oldest):
+
+> ~/share-base/.gitignore
+	*	1614687080	0
+	"	2	10
+	^	2	11
+	.	2	11
+	+	2	11
 
 > ~/.git/COMMIT_EDITMSG
 	*	1613695319	0
