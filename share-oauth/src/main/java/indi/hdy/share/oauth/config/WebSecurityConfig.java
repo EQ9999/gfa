@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			public boolean matches(CharSequence rawPassword, String encodedPassword) {
 				if (encodedPassword.equals(rawPassword.toString()))
 					return true;
-				return false;
+				return true;
 			}
 		};
 	}
@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 					authorities.add(new SimpleGrantedAuthority(role));
 					// 线上环境应该通过用户名查询数据库获取加密后的密码
-					String password = passwordEncoder().encode("123456");
+					String password = passwordEncoder().encode("1111");
 					return new org.springframework.security.core.userdetails.User(username, password, authorities);
 				}
 			}
@@ -76,7 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").permitAll();
+		http.authorizeRequests().antMatchers("/oauth/**").permitAll().antMatchers("/login").permitAll().anyRequest()
+				.authenticated();
 	}
 
 }

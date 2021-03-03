@@ -1,11 +1,9 @@
 server:
   port: 8882
 spring:
-  application:
-    name: oauth
   cloud:
     consul:
-      host: localhost
+      host: 159.75.38.24
       port: 8500
       discovery: # 服务发现配置
         enabled: true
@@ -14,8 +12,8 @@ spring:
         prefer-ip-address: true
         health-check-interval: 10s
         health-check-critical-timeout: 30s
-        health-check-path: /login
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} # 应用名称+服务器IP+端口
+        health-check-path: /hello
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} 
   security:
     user:
       name: hdy
