@@ -12,8 +12,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Configuration
@@ -25,25 +23,47 @@ public class OauthConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
 	private RedisConnectionFactory redisConnectionFactory;
-	
+
 	@Autowired
 	public UserDetailsService myUserDetailsService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		/**
 		 * redis token 方式
 		 */
+
 		endpoints.authenticationManager(authenticationManager).userDetailsService(myUserDetailsService)
 				.tokenStore(new RedisTokenStore(redisConnectionFactory));
-		endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET,HttpMethod.POST);
-		endpoints.pathMapping("/oauth/token","/oauth/getToken");
+		endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+		endpoints.pathMapping("/oauth/token", "/oauth/getToken");
+
+// 		设置client的第二种方式
+//		DefaultTokenServices consumerTokenServices = (DefaultTokenServices) endpoints.getConsumerTokenServices();
+//		InMemoryClientDetailsService client=new InMemoryClientDetailsService();
+//		client.setClientDetailsStore(clientDetailsStore);
+//		consumerTokenServices.setClientDetailsService(client);
+//		endpoints.tokenServices(consumerTokenServices);
+
+//		endpoints.authorizationCodeServices(new AuthorizationCodeServices() {
+//			
+//			@Override
+//			public String createAuthorizationCode(OAuth2Authentication authentication) {
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//			
+//			@Override
+//			public OAuth2Authentication consumeAuthorizationCode(String code) throws InvalidGrantException {
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//		});
+
 	}
-	
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -58,7 +78,7 @@ public class OauthConfig extends AuthorizationServerConfigurerAdapter {
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.allowFormAuthenticationForClients();
-		security.checkTokenAccess("isAuthenticated()");
+		security.checkTokenAccess("permitAll()");
 		security.tokenKeyAccess("isAuthenticated()");
 	}
 }

@@ -13,11 +13,11 @@ spring:
         health-check-interval: 10s
         health-check-critical-timeout: 30s
         health-check-path: /hello
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} 
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
   security:
     user:
       name: hdy
-      password: 111
+      password: 1995415
   redis:
     database: 2
     host: 159.75.38.24

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			public boolean matches(CharSequence rawPassword, String encodedPassword) {
 				if (encodedPassword.equals(rawPassword.toString()))
 					return true;
-				return true;
+				return false;
 			}
 		};
 	}
@@ -62,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					authorities.add(new SimpleGrantedAuthority(role));
 					// 线上环境应该通过用户名查询数据库获取加密后的密码
 					String password = passwordEncoder().encode("1111");
-					return new org.springframework.security.core.userdetails.User(username, password, authorities);
+					return new User(username, password, authorities);
 				}
 			}
 		};
@@ -76,8 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/oauth/**").permitAll().antMatchers("/login").permitAll().anyRequest()
-				.authenticated();
+		http.authorizeRequests().antMatchers("/oauth/**").permitAll().and().authorizeRequests().antMatchers("/login")
+				.permitAll().and().authorizeRequests().anyRequest().authenticated();
 	}
 
 }
