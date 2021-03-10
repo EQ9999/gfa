@@ -12,13 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class Oauth {
 
 	@RequestMapping("/hello")
-//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public String hello() {
+	public String hello() throws Exception {
 		return "hello";
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Oauth.class, new String[] { "--debug" });
+		System.out.println("xxxx");
+//		Log log = LogFactory.getLog(Oauth.class);
+
+//		log.debug("xxx", new Exception());
+//		SpringApplication.run(Oauth.class, new String[] { "--debug" });
+
+//		FilterSecurityInterceptor
+
+		SpringApplication.run(Oauth.class);
 	}
 
 	// getToken

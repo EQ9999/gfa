@@ -1,5 +1,9 @@
 server:
   port: 8882
+logging: 
+  file: c:/app.log
+  level:
+    ROOT: INFO
 spring:
   cloud:
     consul:
@@ -30,6 +34,11 @@ spring:
         min-idle: 0
     timeout: 100ms
 management:
+  endpoints:
+    web:
+      exposure:
+        include: 
+        - "*"  # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。默认打开health和info
   endpoint:
     health:
-      enabled: true
+      show-details: always  #未开启actuator/health时，我们获取到的信息是{"status":"UP"}，status的值还有可能是 DOWN。开启后打印详细信息
